@@ -1,4 +1,28 @@
-.venv
-.idea
+# IDE and editors
+.idea/
+.vscode/
+
+# Environment files
+
+*token.json*
+*credentials.json*
+
+# System files
+.DS_Store
+*.pem
+
+# Python
+__pycache__/
+*pyc*
+venv/
+.venv/
 **__pycache__
+
+# Data and databases
 db.sqlite3
+
+# Build caches
+.cache/
+
+# Media files
+media/
