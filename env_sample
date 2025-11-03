@@ -1,0 +1,15 @@
+# PostgreSQL Database Configuration
+POSTGRES_DB=social_media_db
+POSTGRES_USER=social_media_user
+POSTGRES_PASSWORD=CHANGE_THIS_TO_STRONG_PASSWORD
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+
+# Django Configuration
+SECRET_KEY=CHANGE_THIS_TO_LONG_RANDOM_SECRET_KEY_50_CHARACTERS_OR_MORE
+DEBUG=False
+ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com,localhost
+
+# Celery Configuration
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
