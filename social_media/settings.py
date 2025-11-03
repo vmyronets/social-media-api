@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "django_celery_beat",
     # Local apps
     "user",
-    "post"
+    "content"
 ]
 
 # custom User model

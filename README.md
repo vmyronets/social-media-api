@@ -1,34 +1,91 @@
-# Social Media API - Django REST Framework
+# 🌐 Social Media API - Django REST Framework
 
 A comprehensive RESTful API for a social media platform built with Django REST Framework. This API supports user authentication, 
 profiles, posts with scheduled publishing, likes, comments, and a follow/unfollow system.
 
-## Features
+## 🚀 Features
 
-- ✅ User Registration and Authentication (Token-based)
-- ✅ User Profile Management
-- ✅ User Search
+- ✅ User Registration and Authentication (Token-based via Django REST Knox)
+- ✅ User Profile Management — create, update, and view profiles 
+- ✅ User Search by username or other attributes
 - ✅ Follow/Unfollow System
-- ✅ Post Creation with hashtags
-- ✅ Scheduled Post Publishing (using Celery)
+- ✅ Post Creation with text, media attachments, and hashtags 
+- ✅ Scheduled Post Publishing (using Celery + Redis)
 - ✅ Post Likes
 - ✅ Post Comments
-- ✅ Media Upload Support (images)
+- ✅ Media Upload Support (user avatars, post images)
 - ✅ API Documentation (Swagger UI)
-- ✅ Proper Permissions
+- ✅ Proper Permissions — Users can manage only their own data
 
-## Tech Stack
+## 🧱 Tech Stack
 
-- **Framework**: Django 5.2.7 + Django REST Framework 3.16.1
-- **Database**: SQLite
+- **Framework**: Django + Django REST Framework
+- **Database**: PostgreSQL (or SQLite for development)
 - **Authentication**: Token-based (Django REST Knox)
-- **Task Queue**: Celery 5.5.3 + Redis
+- **Task Queue**: Celery + Redis
 - **API Documentation**: drf-spectacular (OpenAPI 3.0)
+- **Containerization**: Docker + Docker Compose
 
-## Project Structure
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/vmyronets/social-media-api.git
+````
+
+### 2. Go to the project directory
+```bash
+cd social-media-api
+```
+
+### 3. Rename `env_sample` to `.env` and fill in the values
+
+### 4. Build and Run Docker Containers
+
+```bash
+docker compose up --build
+```
+
+This will:
+- Build the Django application image
+- Start PostgreSQL database
+- Start Redis server
+- Start Django application
+- Start Celery worker
+- Start Celery beat scheduler
+
+
+### 5. Create Superuser
+```bash
+docker compose exec app python manage.py createsuperuser
+```
+
+### 6. Access the Application
+
+Once all services are running:
+
+- **API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/api/docs/
+- **Admin Panel**: http://localhost:8000/admin/
+
+---
+
+## 📚 API Documentation
+
+Swagger UI is automatically generated using `drf-spectacular` and available at:
 
 ```
-backend/
+http://localhost:8000/api/docs/
+```
+
+---
+
+## 🧩 Project Structure
+
+```
+social-media-api/
 ├── social_media/          # Main project settings
 │   ├── settings.py        # Django settings
 │   ├── urls.py            # Main URL configuration
@@ -38,7 +95,7 @@ backend/
 │   ├── serializers.py     # User serializers
 │   ├── views.py           # Authentication & profile views
 │   └── urls.py            # User endpoints
-├── post/                  # Post app
+├── content/               # Post app
 │   ├── models.py          # Post, Hashtag, Like, Comment models
 │   ├── serializers.py     # Post serializers
 │   ├── views.py           # Post views
@@ -66,9 +123,9 @@ backend/
    - following (FK to User)
    - created_at
 
-### Post App
+### Content App
 
-1. **Post**
+1. **Content**
    - author (FK to User)
    - text
    - scheduled_time (nullable)
@@ -94,7 +151,7 @@ backend/
    - created_at
    - updated_at
 
-## API Endpoints
+## ⚡ API Endpoints
 
 ### Authentication Endpoints
 
@@ -177,38 +234,11 @@ GET  /api/docs/                   - Swagger UI (Interactive API docs)
 GET  /api/schema/                 - OpenAPI schema
 ```
 
-## Installation & Setup
+---
 
-1. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 🏁 License
 
-2. **Run Migrations**
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+This project is licensed under the **MIT License**.
+You are free to use, modify, and distribute it with attribution.
 
-3. **Create Superuser (Optional)**
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-4. **Start Services**
-
-   The project uses Supervisor to manage services:
-   ```bash
-   # Start Redis
-   sudo supervisorctl start redis
-   
-   # Start Celery Worker
-   sudo supervisorctl start celery_worker
-   
-   # Start Celery Beat (for scheduled posts)
-   sudo supervisorctl start celery_beat
-   
-   # Start Django
-   python manage.py runserver 0.0.0.0:8001
-   ```
-
+---
